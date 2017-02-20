@@ -50,13 +50,19 @@ class ICal
      *
      * @return Object The iCal-Object
      */ 
-    public function __construct($filename) 
+    public function __construct($file, $isFile = true) 
     {
-        if (!$filename) {
+        if (!$file) {
             return false;
         }
         
-        $lines = file($filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        if($isFile) {
+            $lines = file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+        }else{
+            $lines = $file;
+        }
+        
+        
         if (stristr($lines[0], 'BEGIN:VCALENDAR') === false) {
             return false;
         } else {
